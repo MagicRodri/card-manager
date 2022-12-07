@@ -1,4 +1,5 @@
 import uuid
+from datetime import timedelta
 
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -62,3 +63,26 @@ class Card(BaseModel):
             self.save()
 
 
+class Generator(BaseModel):
+    """
+        Model for auto cards generation
+    """
+
+    A_MINUTE = timedelta(minutes=1)
+    A_MONTH = timedelta(days=30)
+    SIX_MONTHS = timedelta(days=30*6)
+    A_YEAR = timedelta(days=30*12)
+
+    VALIDITY_CHOICES = (
+        (A_MINUTE,'A minute(for testing)'),
+        (A_MONTH,'A month'),
+        (SIX_MONTHS,'Six months'),
+        (A_YEAR,'A year')
+    )
+    quantity = models.PositiveIntegerField(default=1)
+    validity_time = models.DurationField(default=A_MONTH, choices=VALIDITY_CHOICES)
+    completed = models.BooleanField(default=False)
+
+
+    def __str__(self) -> str:
+        return f'quantity:{self.quantity}, validity:{self.validity_time}'
