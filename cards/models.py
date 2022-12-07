@@ -45,6 +45,7 @@ class Card(BaseModel):
         validators=[MinValueValidator(0.00, message='Amount must be greater or equal to 0')]
     )
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=ACTIVE)
+    last_used = models.DateTimeField(auto_now=True)
     expired_at = models.DateTimeField()
 
 
@@ -59,3 +60,5 @@ class Card(BaseModel):
             self.is_active = True
             self.status = self.ACTIVE
             self.save()
+
+
