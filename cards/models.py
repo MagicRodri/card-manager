@@ -12,7 +12,7 @@ class Card(BaseModel):
     """
         Model for gift card
     """
-    # Explicitly declare status options to avoid typo
+    # Explicitly declare status options to avoid typo when accessing choices
     ACTIVE = 'ACTIVE'
     INACTIVE = 'INACTIVE'
     EXPIRED = 'EXPIRED'
@@ -22,8 +22,26 @@ class Card(BaseModel):
         (INACTIVE,'Inactive'),
         (EXPIRED, 'Expired')
     )
-    serial = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False, auto_created=True, unique=True)
-    number = models.CharField(max_length=CARD_NUMBER_LENGTH, validators=[validate_card_number],default=generate_card_number, unique=True)
+
+    serial = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        auto_created=True,
+        unique=True
+    )
+
+    number = models.CharField(
+        max_length=CARD_NUMBER_LENGTH,
+        validators=[validate_card_number],
+        default=generate_card_number,
+        unique=True
+    )
+    amount = models.DecimalField(
+        decimal_places=2,
+        max_digits=10,
+        default=100.00
+    )
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=ACTIVE)
     expired_at = models.DateTimeField()
 
