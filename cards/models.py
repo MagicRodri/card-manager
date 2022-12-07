@@ -1,8 +1,10 @@
+import uuid
+
 from django.db import models
 
 from core.models import BaseModel
 
-from .utils import CARD_SERIAL_LENGTH, generate_card_serial, validate_card_serial
+from .utils import CARD_NUMBER_LENGTH, generate_card_number, validate_card_number
 
 # Create your models here.
 
@@ -20,7 +22,8 @@ class Card(BaseModel):
         (INACTIVE,'Inactive'),
         (EXPIRED, 'Expired')
     )
-    serial = models.CharField(max_length=CARD_SERIAL_LENGTH, validators=[validate_card_serial],default=generate_card_serial, unique=True)
+    serial = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False, auto_created=True, unique=True)
+    number = models.CharField(max_length=CARD_NUMBER_LENGTH, validators=[validate_card_number],default=generate_card_number, unique=True)
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=ACTIVE)
     expired_at = models.DateTimeField()
 
