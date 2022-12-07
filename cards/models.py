@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from core.models import BaseModel
@@ -40,7 +41,8 @@ class Card(BaseModel):
     amount = models.DecimalField(
         decimal_places=2,
         max_digits=10,
-        default=100.00
+        default=100.00,
+        validators=[MinValueValidator(0.00, message='Amount must be greater or equal to 0')]
     )
     status = models.CharField(max_length=8, choices=STATUS_CHOICES, default=ACTIVE)
     expired_at = models.DateTimeField()
