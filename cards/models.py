@@ -3,12 +3,30 @@ from datetime import timedelta
 
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models import Q
 
 from core.models import BaseModel
 
 from .utils import CARD_NUMBER_LENGTH, generate_card_number, validate_card_number
 
 # Create your models here.
+
+class CardQuerySet(models.QuerySet):
+    
+    def search(self, query):
+        """
+            In order to be able to search any card queryset 
+        """
+        if query is None or query == "":
+            return self.get_queryset().none()
+        else:
+            lookups = Q(serial__icontains=query) | Q(number__icontains=query) | Q(status__icontains=query)
+        return self.filter(lookups)
+
+class CardManager(models.Manager):
+
+    def search(self,query=None):
+        return self.get_queryset().search(query)
 
 class Card(BaseModel):
     """
@@ -49,6 +67,7 @@ class Card(BaseModel):
     last_used = models.DateTimeField(auto_now=True)
     expired_at = models.DateTimeField()
 
+    objects = CardManager()
 
     def deactivate(self):
         if self.is_active:
