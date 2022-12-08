@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div>
+        <a href={% url 'cards:generator-create' %}>Generate cards</a>
+    </div>
+    {% for card in cards %}
+        <div>
+            <p>Number:{{card.number}}</p>
+            <p>Issued:{{card.created_at.ctime}}</p>
+            <p>Statut:{{card.status}}</p>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock content %}
