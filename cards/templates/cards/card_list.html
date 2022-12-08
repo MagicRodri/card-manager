@@ -37,10 +37,10 @@
                             <td>{{card.expired_at}}</td>
                             <td>{{card.status}}</td>
                             <td>
-                                {% if card.can_activate %}
-                                    <a class="btn btn-success" href={% url 'cards:card-activate' card.pk %}>Activate</a>
-                                {% else %}
+                                {% if card.is_active %}
                                     <a class="btn btn-danger" href={% url 'cards:card-deactivate' card.pk %}>Deactivate</a>
+                                {% else %}
+                                    <a class="btn btn-success" href={% url 'cards:card-activate' card.pk %}>Activate</a>
                                 {% endif %}
                                 <a class="btn btn-dark" href={% url 'cards:card-history' card.pk %}>History</a>
                             </td>

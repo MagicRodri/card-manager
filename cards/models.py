@@ -1,5 +1,5 @@
 import uuid
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -72,22 +72,25 @@ class Card(BaseModel):
     def __str__(self) -> str:
         return self.number
 
-    def can_activate(self):
-
-        return self.status in (self.INACTIVE,self.EXPIRED)
-
-    def can_deactivate(self):
-
-        return not self.can_activate()
-
     def deactivate(self):
+
+        """
+            Deactivate card if card is active
+        """
         if self.is_active:
             self.is_active = False
             self.status = self.INACTIVE
             self.save()
 
     def activate(self):
+
+        """
+            Activate card if card is not active
+            If expired activate with a validation time of one month (30 days)
+        """
         if not self.is_active:
+            if self.status == self.EXPIRED:
+                self.expired_at = datetime.utcnow() + timedelta(days=30)
             self.is_active = True
             self.status = self.ACTIVE
             self.save()
