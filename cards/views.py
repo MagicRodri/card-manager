@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .forms import GeneratorForm, PaymentForm
 from .models import Card
@@ -20,7 +20,14 @@ def card_list(request):
 
 def card_history(request, pk):
 
-    return render(request,'cards/card_history.html')
+    card = get_object_or_404(Card, pk = pk)
+    payments = card.payments.all()
+
+    context = {
+        'card' : card,
+        'payments' : payments
+    }
+    return render(request,'cards/card_history.html', context=context)
 
 def generator_create(request):
     """

@@ -122,4 +122,4 @@ class Payment(BaseModel):
     comment = models.CharField(max_length=128, blank=True)
 
     def __str__(self) -> str:
-        return f"Card"
+        return f"{self.card}-{self.price}"

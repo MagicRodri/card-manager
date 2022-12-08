@@ -2,7 +2,16 @@
 
 {% block content %}
 
-    {% for payment in payments %}
-    
-    {% endfor %}
+    <h1>Card: {{card}}</h1>
+
+    {% if payments %}
+        {% for payment in payments %}
+            <div>
+                <p>Amount:{{payment.price}}</p>
+                <p>Date:{{payment.updated_at}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No history, yet.</p>
+    {% endif %}
 {% endblock content %}
