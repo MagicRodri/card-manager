@@ -72,6 +72,14 @@ class Card(BaseModel):
     def __str__(self) -> str:
         return self.number
 
+    def can_activate(self):
+
+        return self.status in (self.INACTIVE,self.EXPIRED)
+
+    def can_deactivate(self):
+
+        return not self.can_activate()
+
     def deactivate(self):
         if self.is_active:
             self.is_active = False

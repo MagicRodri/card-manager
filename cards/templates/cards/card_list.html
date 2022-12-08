@@ -30,13 +30,20 @@
                 <tbody>
                     {% for card in cards %}
                         <tr>
-                            <td><a href={% url 'cards:card-history' card.pk %} class="row-link">{{card.serial}}</a></td>
+                            <td>{{card.serial}}</td>
                             <td>{{card.number}}</td>
                             <td>{{card.amount}}</td>
                             <td>{{card.created_at}}</td>
                             <td>{{card.expired_at}}</td>
                             <td>{{card.status}}</td>
-                            <td>-</td>
+                            <td>
+                                {% if card.can_activate %}
+                                    <a class="btn btn-success" href={% url 'cards:payment-create' %}>Activate</a>
+                                {% else %}
+                                    <a class="btn btn-danger" href={% url 'cards:payment-create' %}>Deactivate</a>
+                                {% endif %}
+                                <a class="btn btn-dark" href={% url 'cards:card-history' card.pk %}>History</a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
