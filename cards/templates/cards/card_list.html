@@ -38,9 +38,9 @@
                             <td>{{card.status}}</td>
                             <td>
                                 {% if card.can_activate %}
-                                    <a class="btn btn-success" href={% url 'cards:payment-create' %}>Activate</a>
+                                    <a class="btn btn-success" href={% url 'cards:card-activate' card.pk %}>Activate</a>
                                 {% else %}
-                                    <a class="btn btn-danger" href={% url 'cards:payment-create' %}>Deactivate</a>
+                                    <a class="btn btn-danger" href={% url 'cards:card-deactivate' card.pk %}>Deactivate</a>
                                 {% endif %}
                                 <a class="btn btn-dark" href={% url 'cards:card-history' card.pk %}>History</a>
                             </td>

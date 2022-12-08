@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
 from .forms import GeneratorForm, PaymentForm
 from .models import Card
@@ -18,6 +19,8 @@ def card_list(request):
     }
     return render(request,'cards/card_list.html', context=context)
 
+
+
 def card_history(request, pk):
 
     card = get_object_or_404(Card, pk = pk)
@@ -28,6 +31,27 @@ def card_history(request, pk):
         'payments' : payments
     }
     return render(request,'cards/card_history.html', context=context)
+
+
+
+def deactivate_card(request,pk):
+    card = get_object_or_404(Card, pk = pk)
+
+    if request.method == 'POST':
+        card.deactivate()
+        return redirect(reverse('cards:card-list'))
+
+    return render(request,'cards/card_deactivate.html',context={'card' : card})
+
+def activate_card(request,pk):
+    
+    card = get_object_or_404(Card, pk = pk)
+
+    if request.method == 'POST':
+        card.activate()
+        return redirect(reverse('cards:card-list'))
+
+    return render(request,'cards/card_activate.html',context={'card' : card})
 
 def generator_create(request):
     """

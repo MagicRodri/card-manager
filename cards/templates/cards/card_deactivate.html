@@ -1,0 +1,10 @@
+{% extends '_base.html' %}
+
+{% block content %}
+     <form action='' method='post'>
+        {% csrf_token %}
+        <p>Are you sure you wanna deactivate this card:{{card}} ?</p>
+        <button type='submit'>Yes, deactivate</button>
+     </form>
+  
+{% endblock content %}
