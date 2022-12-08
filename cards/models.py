@@ -15,7 +15,7 @@ class CardQuerySet(models.QuerySet):
     
     def search(self, query):
         """
-            In order to be able to search any card queryset 
+            In order to be able to perform search on any card queryset 
         """
         lookups = Q(serial__icontains=query) | Q(number__icontains=query) | Q(status__icontains=query) | Q(created_at__icontains=query)
         return self.filter(lookups)
@@ -96,7 +96,9 @@ class Card(BaseModel):
             self.save()
 
     def make_payment(self, payment):
+        """
 
+        """
         self.amount -= payment.price
         self.save()
 
