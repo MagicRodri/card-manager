@@ -7,4 +7,4 @@ class GeneratorForm(forms.ModelForm):
 
     class Meta:
         model = Generator
-        fields = ['quantity','validity_time']
+        fields = ['quantity','serial','validity_time']

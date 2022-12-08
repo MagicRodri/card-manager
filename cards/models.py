@@ -43,14 +43,14 @@ class Card(BaseModel):
         (EXPIRED, 'Expired')
     )
 
-    serial = models.UUIDField(
+    id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False,
         auto_created=True,
         unique=True
     )
-
+    serial = models.CharField(max_length=16, default='ABC')
     number = models.CharField(
         max_length=CARD_NUMBER_LENGTH,
         validators=[validate_card_number],
@@ -99,6 +99,7 @@ class Generator(BaseModel):
         (A_YEAR,'A year')
     )
     quantity = models.PositiveIntegerField(default=1)
+    serial = models.CharField(max_length=16, default='gABC')
     validity_time = models.DurationField(default=A_MONTH, choices=VALIDITY_CHOICES)
     completed = models.BooleanField(default=False)
 

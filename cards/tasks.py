@@ -23,7 +23,7 @@ def generate_cards(generator_pk) ->None:
 
     generator = Generator.objects.get(pk=generator_pk)
     for _ in range(generator.quantity):
-        Card.objects.create(expired_at = datetime.utcnow() + generator.validity_time )
+        Card.objects.create(serial=generator.serial,expired_at = datetime.utcnow() + generator.validity_time )
 
     generator.completed = True
     generator.save()
