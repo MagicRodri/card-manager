@@ -17,13 +17,13 @@ class CardQuerySet(models.QuerySet):
         """
             In order to be able to search any card queryset 
         """
-        if query is None or query == "":
-            return self.get_queryset().none()
-        else:
-            lookups = Q(serial__icontains=query) | Q(number__icontains=query) | Q(status__icontains=query)
+        lookups = Q(serial__icontains=query) | Q(number__icontains=query) | Q(status__icontains=query) | Q(created_at__icontains=query)
         return self.filter(lookups)
 
 class CardManager(models.Manager):
+
+    def get_queryset(self):
+        return CardQuerySet(model=self.model, using=self._db)
 
     def search(self,query=None):
         return self.get_queryset().search(query)
@@ -69,6 +69,9 @@ class Card(BaseModel):
 
     objects = CardManager()
 
+    def __str__(self) -> str:
+        return self.number
+
     def deactivate(self):
         if self.is_active:
             self.is_active = False
@@ -81,6 +84,10 @@ class Card(BaseModel):
             self.status = self.ACTIVE
             self.save()
 
+    def make_payment(self, payment):
+
+        self.amount -= payment.price
+        self.save()
 
 class Generator(BaseModel):
     """
@@ -106,3 +113,13 @@ class Generator(BaseModel):
 
     def __str__(self) -> str:
         return f'quantity:{self.quantity}, validity:{self.validity_time}'
+
+
+class Payment(BaseModel):
+
+    price = models.DecimalField(decimal_places=2,max_digits=10, default=9.99 )
+    card = models.ForeignKey(Card, on_delete=models.CASCADE, related_name='payments')
+    comment = models.CharField(max_length=128, blank=True)
+
+    def __str__(self) -> str:
+        return f"Card"

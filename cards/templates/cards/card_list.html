@@ -1,17 +1,26 @@
 {% extends '_base.html' %}
 
 {% block content %}
-    <div>
-        <a href={% url 'cards:generator-create' %}>Generate cards</a>
-    </div>
 
     <div class="container-fluid">
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between m-2">
+            <div>
+                <a class="btn btn-dark" href={% url 'cards:generator-create' %}>Generate cards</a>
+                <a class="btn btn-dark" href={% url 'cards:payment-create' %}>Make Dummy payment</a>
+            </div>
+            <form action="" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input name="q" type="text" class="form-control" placeholder="Search">
+            </form>
+        </div>
+        
         <div class="row">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th scope="col">Serial</th>
                         <th scope="col">Number</th>
+                        <th scope="col">Amount</th>
                         <th scope="col">Created at</th>
                         <th scope="col">Expired at</th>
                         <th scope="col">Status</th>
@@ -21,10 +30,11 @@
                 <tbody>
                     {% for card in cards %}
                         <tr>
-                            <td>{{card.serial}}</td>
+                            <td><a href={% url 'cards:card-history' card.pk %} class="row-link">{{card.serial}}</a></td>
                             <td>{{card.number}}</td>
-                            <td>{{card.created_at.ctime}}</td>
-                            <td>{{card.expired_at.ctime}}</td>
+                            <td>{{card.amount}}</td>
+                            <td>{{card.created_at}}</td>
+                            <td>{{card.expired_at}}</td>
                             <td>{{card.status}}</td>
                             <td>-</td>
                         </tr>

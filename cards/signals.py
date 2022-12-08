@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 
-from .models import Card, Generator
+from .models import Card, Generator, Payment
 from .tasks import generate_cards, set_card_expired
 
 
@@ -20,3 +20,11 @@ def generator_post_save(instance,created,*args, **kwargs):
         generate_cards.delay(instance.pk)
 
 post_save.connect(generator_post_save,sender=Generator)
+
+def payment_post_save(instance, created, *args, **kwargs):
+
+    if created:
+        instance.card.make_payment(instance)
+
+
+post_save.connect(payment_post_save, sender=Payment)
