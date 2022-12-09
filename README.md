@@ -34,12 +34,12 @@ CELERY_RESULT_BACKEND=redis://localhost:6379
 ```
 ### - Run celery worker (make sure redis is spinned before)
 
-Linux
+Linux:
 ```bash
 (venv) celery -A cardmanager worker -l INFO
 ```
 
-Windows10+ (Set pool to solo)
+Windows10+ : By the moment of writing this prefork(--pool=processes by default) concurrency doesn't work on windows10+, set --pool to solo or threads
 ```bash
 (venv) celery -A cardmanager worker -l INFO --pool=solo
 ```
