@@ -76,6 +76,7 @@ def generator_create(request):
 def payment_create(request):
     """
     """
+    payment_form = PaymentForm()
     message = ''
     if request.method == 'POST':
         payment_form = PaymentForm(data=request.POST)
@@ -84,7 +85,6 @@ def payment_create(request):
             payment_form.save()
             message = 'Payment made successfully'
 
-    payment_form = PaymentForm()
     context = {
         'form' : payment_form,
         'message' : message

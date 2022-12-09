@@ -24,6 +24,7 @@ class PaymentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
+        print(self.fields)
         for field_name in self.fields:
             self.fields.get(field_name).widget.attrs = {
                 'class' : 'form-control'

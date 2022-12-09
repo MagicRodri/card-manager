@@ -13,6 +13,9 @@
                     <div class="">
                         <p>{{payment.updated_at}}</p>
                         <p>Spent <span class="fw-bold">{{payment.price}}$</span></p>
+                        {% if payment.comment %}
+                            <p>Comment: {{payment.comment}}</p>
+                        {% endif %}
                         <hr>
                     </div>
                 {% endfor %}
