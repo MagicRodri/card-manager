@@ -36,7 +36,7 @@
                             <td>{{card.created_at}}</td>
                             <td>{{card.expired_at}}</td>
                             <td>{{card.status}}</td>
-                            <td>
+                            <td class='d-flex justify-content-evenly'>
                                 {% if card.is_active %}
                                     <a class="btn btn-danger" href={% url 'cards:card-deactivate' card.pk %}>Deactivate</a>
                                 {% else %}

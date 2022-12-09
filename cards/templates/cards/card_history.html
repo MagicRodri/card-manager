@@ -2,16 +2,23 @@
 
 {% block content %}
 
-    <h1>Card: {{card}}</h1>
+    <div class="d-flex flex-column align-items-center justify-content-between">
 
-    {% if payments %}
-        {% for payment in payments %}
-            <div>
-                <p>Amount:{{payment.price}}</p>
-                <p>Date:{{payment.updated_at}}</p>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>No history, yet.</p>
-    {% endif %}
+        <div>
+            <h1>Usage History</h1>
+            <h2 class="fs-1">Card: <span class="text-info">{{card}}</span> </h2>
+        
+            {% if payments %}
+                {% for payment in payments %}
+                    <div class="">
+                        <p>{{payment.updated_at}}</p>
+                        <p>Spent <span class="fw-bold">{{payment.price}}$</span></p>
+                        <hr>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-center fw-bold">No history, yet.</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock content %}
