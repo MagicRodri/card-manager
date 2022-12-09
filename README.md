@@ -33,8 +33,15 @@ CELERY_RESULT_BACKEND=redis://localhost:6379
 (venv) python manage.py runserver
 ```
 ### - Run celery worker (make sure redis is spinned before)
+
+Linux
 ```bash
 (venv) celery -A cardmanager worker -l INFO
+```
+
+Windows10+ (Set pool to solo)
+```bash
+(venv) celery -A cardmanager worker -l INFO --pool=solo
 ```
 ### Demo version available on [Card-manager](https://).
 

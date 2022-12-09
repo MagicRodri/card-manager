@@ -14,6 +14,8 @@ DEBUG = bool(int(os.getenv('DEBUG',0)))
 
 ALLOWED_HOSTS = []
 
+if not DEBUG:
+    ALLOWED_HOSTS += [os.getenv('ALLOWED_HOSTS')]
 
 # Application definition
 
