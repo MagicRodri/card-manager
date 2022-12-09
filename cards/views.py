@@ -58,16 +58,17 @@ def generator_create(request):
     """
 
     generator_form = GeneratorForm()
-
+    message = ''
     if request.method == 'POST':
         generator_form = GeneratorForm(data=request.POST)
 
         if generator_form.is_valid():
             generator_form.save()
-            return HttpResponse('Generator created successfully')
+            message = 'Generator created successfully'
     
     context = {
-        'form' : generator_form
+        'form' : generator_form,
+        'message' : message
     }
     return render(request,'cards/generator_create.html',context=context)
 
@@ -75,17 +76,17 @@ def generator_create(request):
 def payment_create(request):
     """
     """
-
-    payment_form = PaymentForm()
-
+    message = ''
     if request.method == 'POST':
         payment_form = PaymentForm(data=request.POST)
 
         if payment_form.is_valid():
             payment_form.save()
-            return HttpResponse('Payment created successfully')
-    
+            message = 'Payment made successfully'
+
+    payment_form = PaymentForm()
     context = {
-        'form' : payment_form
+        'form' : payment_form,
+        'message' : message
     }
     return render(request,'cards/payment_create.html',context=context)

@@ -2,7 +2,12 @@
 
 
 {% block content %}
-    <div class='d-flex align-items-center justify-content-center'>
+    <div class='d-flex flex-column align-items-center justify-content-center'>
+        {% if message %}
+            <div class="">
+                <p class='text-primary'>{{message}}</p>
+            </div>
+        {% endif %}
         <form action="" method="post">
             {% csrf_token %}
             {{form.as_p}}

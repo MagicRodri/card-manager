@@ -1,10 +1,12 @@
 {% extends '_base.html' %}
 
 {% block content %}
-     <form action='' method='post'>
-        {% csrf_token %}
-        <p>Are you sure you wanna deactivate this card:{{card}} ?</p>
-        <button type='submit'>Yes, deactivate</button>
-     </form>
+      <div class='d-flex align-items-center justify-content-center'>
+         <form action='' method='post' >
+            {% csrf_token %}
+            <p>Are you sure you wanna deactivate this card: <span class="fw-bold">{{card}}</span> ?</p>
+            <button class="btn btn-danger" type='submit'>Yes, deactivate</button>
+         </form>
+      </div>
   
 {% endblock content %}

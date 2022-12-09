@@ -1,10 +1,13 @@
 {% extends '_base.html' %}
 
 {% block content %}
-     <form action='' method='post'>
-        {% csrf_token %}
-        <p>Are you sure you wanna Activate card:{{card}} ?</p>
-        <button type='submit'>Yes, activate</button>
-     </form>
+
+      <div class='d-flex align-items-center justify-content-center'>
+         <form action='' method='post'>
+            {% csrf_token %}
+            <p>Are you sure you wanna Activate card: <span class="fw-bold">{{card}}</span> ?</p>
+            <button class="btn btn-success" type='submit'>Yes, activate</button>
+         </form>
+      </div>
   
 {% endblock content %}
